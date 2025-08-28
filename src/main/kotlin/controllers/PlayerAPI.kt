@@ -5,10 +5,32 @@ import models.Player
 class PlayerAPI(private val clubAPI:ClubAPI) {
     private val players = mutableListOf<Player>()
 
-    fun addPlayer(player: Player){
-        // add code to validate that playerId and clubId exist
-        // add code for adding a player with a unique id
+    private var lastId = 0
+
+    private fun getId() = lastId++
+
+
+
+    fun addPlayer(name: String, clubId: Int, age: Int, position: String): Boolean {
+        // 1. Check if club exists
+        if (clubAPI.clubExists(clubId) == null) {
+            println("Cannot add player: Club with ID $clubId does not exist.")
+            return false
+        }
+
+        // 2. Generate unique player ID
+        val player = Player(
+            id = getId(),
+            name = name,
+            clubId = clubId,
+            age = age,
+            position = position
+        )
+
+        // 3. Add player
         players.add(player)
+        println("Player added: $player")
+        return true
     }
 
     fun getAllPlayers(): List<Player> = players
