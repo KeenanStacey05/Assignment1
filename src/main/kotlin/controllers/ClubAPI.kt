@@ -5,15 +5,20 @@ import models.Club
 class ClubAPI {
     private val clubs = mutableListOf<Club>()
 
-    fun addClub(club: Club) {
-        //add code for adding a dept with a unique id
+    private var lastId = 0
+
+    private fun getId() = lastId++
+
+    fun addClub(name: String): Club {
+        val club = Club(getId(), name)
         clubs.add(club)
+        return club
     }
 
     fun getAllClubs(): List<Club> = clubs
 
     fun clubExists(clubId: Int): Club? {
-        return clubs.find { it -> it.id == clubId }
+        return clubs.find { it -> it.clubId == clubId }
     }
 }
 
