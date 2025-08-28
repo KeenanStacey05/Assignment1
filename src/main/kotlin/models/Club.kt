@@ -1,6 +1,6 @@
 package models
 
 data class Club(
-    val id: Int,
+    var clubId: Int,
     val name: String
 )
