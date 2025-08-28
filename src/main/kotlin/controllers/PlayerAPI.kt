@@ -42,7 +42,7 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
         val player = players.find { it.id == playerId }
         if (player == null) {
             return "models.Player with ID \${playerId} does not exist"
-        } else if (clubAPI.clubExists(clubId) != null) {
+        } else if (clubAPI.clubExists(clubId) == null) {
             return "models.Club with ID \${clubId} does not exist."
         } else {
             players[players.indexOf(player)] = player.copy(clubId = clubId)

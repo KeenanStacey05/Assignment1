@@ -19,7 +19,8 @@ fun main() {
                       |  2. List Clubs
                       |  3. Add Player
                       |  4. List Players
-                      |  
+                      |  5. Listing Players by their Club
+                      |  6. Adding Players to a Club
                       |  0. Exit
                       |  > """.trimMargin("|")
         )
@@ -64,6 +65,31 @@ fun main() {
                 }
 
             }
+
+            5 -> {
+            // List players by club
+                val clubId = readNextInt("Enter Club ID: ")
+                val players = playerAPI.getPlayersByClub(clubId)
+
+                if (players.isEmpty()) {
+                    println(" No players found for Club ID $clubId.")
+                } else {
+                    println(" Players in Club $clubId:")
+                    players.forEach {
+                        println(" - ${it.id}: ${it.name}, Age: ${it.age}, Position: ${it.position}")
+                    }
+                }
+            }
+
+            6 -> {
+                //Adding Players to a Club
+                val playerId = readNextInt("Enter Player ID: ")
+                var clubId = readNextInt("Enter new Club ID: ")
+
+                val result = playerAPI.addPlayerToClub(playerId, clubId)
+                println(result)
+            }
+
             0 -> println(" Exiting...")
             else -> println(" Invalid option")
         }
