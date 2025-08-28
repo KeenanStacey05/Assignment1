@@ -1,7 +1,5 @@
 import controllers.ClubAPI
 import controllers.PlayerAPI
-import models.Club
-import models.Player
 import utils.readNextInt
 import utils.readNextLine
 
@@ -19,6 +17,9 @@ fun main() {
                       |Menu:
                       |  1. Add Club
                       |  2. List Clubs
+                      |  3. Add Player
+                      |  4. List Players
+                      |  
                       |  0. Exit
                       |  > """.trimMargin("|")
         )
@@ -36,9 +37,32 @@ fun main() {
                 if (clubs.isEmpty()) {
                     println(" No clubs found.")
                 } else {
-                    println("📋 Clubs:")
+                    println(" Clubs:")
                     clubs.forEach { println(" - ${it.clubId}: ${it.name}") }
                 }
+
+            }
+
+            3 -> {
+                val name = readNextLine("Name: ")
+                val clubId = readNextInt("Club ID: ")
+                val age = readNextInt("Age: ")
+                val position = readNextLine("Position: ")
+
+                val result = playerAPI.addPlayer(name, clubId, age, position)
+                println(result)
+            }
+
+            4 -> {
+                // List all clubs
+                val players = playerAPI.getAllPlayers()
+                if (players.isEmpty()) {
+                    println(" No players found.")
+                } else {
+                    println(" Players:")
+                    players.forEach { println(" - ${it.id}: ${it.name}: ${it.age}: ${it.clubId}: ${it.position}") }
+                }
+
             }
             0 -> println(" Exiting...")
             else -> println(" Invalid option")
