@@ -12,13 +12,11 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
 
 
     fun addPlayer(name: String, clubId: Int, age: Int, position: String): Boolean {
-        // 1. Check if club exists
         if (clubAPI.clubExists(clubId) == null) {
             println("Cannot add player: Club with ID $clubId does not exist.")
             return false
         }
 
-        // 2. Generate unique player ID
         val player = Player(
             id = getId(),
             name = name,
@@ -27,7 +25,6 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
             position = position
         )
 
-        // 3. Add player
         players.add(player)
         println("Player added: $player")
         return true
@@ -49,5 +46,7 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
             return "models.Player \${player.name} moved to club ID \${clubId}."
         }
     }
+
+
 }
 
