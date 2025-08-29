@@ -2,8 +2,12 @@ package controllers
 
 import models.Club
 import utils.isValidListIndex
+import persistence.Serializer
 
-class ClubAPI {
+class ClubAPI(private val serializer: Serializer) {
+
+    private var club = ArrayList<Club>()
+
     private val clubs = mutableListOf<Club>()
 
     private var lastId = 0
@@ -43,5 +47,17 @@ class ClubAPI {
             null
         }
     }
+
+    @Throws(Exception::class)
+    fun load() {
+
+        club = serializer.read() as ArrayList<Club>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(clubs)
+    }
+
 }
 
