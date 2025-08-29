@@ -20,5 +20,20 @@ class ClubAPI {
     fun clubExists(clubId: Int): Club? {
         return clubs.find { it -> it.clubId == clubId }
     }
+
+    fun updateClub(indexToUpdate: Int, club: Club?): Boolean {
+
+        val foundClub = clubExists(indexToUpdate)
+
+
+        if ((foundClub != null) && (club != null)) {
+            foundClub.name = club.name
+            foundClub.clubId = club.clubId
+            return true
+        }
+
+        return false
+    }
+
 }
 
