@@ -1,9 +1,9 @@
 package models
 
 data class Player(
-    val id: Int,
-    val name: String,
-    val clubId: Int,
-    val age: Int,
-    val position: String
+    var id: Int,
+    var name: String,
+    var clubId: Int,
+    var age: Int,
+    var position: String
 )

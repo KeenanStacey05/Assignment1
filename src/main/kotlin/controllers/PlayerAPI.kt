@@ -1,5 +1,6 @@
 package controllers
 
+import models.Club
 import models.Player
 
 class PlayerAPI(private val clubAPI:ClubAPI) {
@@ -46,6 +47,30 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
             return "models.Player \${player.name} moved to club ID \${clubId}."
         }
     }
+
+
+    fun playerExists(playerId: Int): Player? {
+        return players.find { it -> it.id == playerId }
+    }
+
+
+    fun updatePlayer(indexToUpdate: Int, players: Player?): Boolean {
+
+        val foundPlayer = playerExists(indexToUpdate)
+
+
+        if ((foundPlayer != null) && (players != null)) {
+            foundPlayer.name = players.name
+            foundPlayer.id = players.id
+            foundPlayer.clubId = players.clubId
+            foundPlayer.age = players.age
+            foundPlayer.position = players.position
+            return true
+        }
+
+        return false
+    }
+
 
 
 }
