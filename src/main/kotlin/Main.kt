@@ -4,12 +4,17 @@ import models.Club
 import models.Player
 import utils.readNextInt
 import utils.readNextLine
-
+import persistence.XMLSerializer
+import persistence.JSONSerializer
+import persistence.Serializer
+import java.io.File
 
 fun main() {
 
-    val clubAPI = ClubAPI()
+    val clubAPI = ClubAPI(XMLSerializer(File("clubs.xml")))
     val playerAPI = PlayerAPI(clubAPI)
+
+    clubAPI.load()
 
     var choice: Int
 
@@ -27,6 +32,8 @@ fun main() {
                       |  8. Updating a Player
                       |  9. Deleting a Club
                       |  10. Deleting a Player
+                      |  11. Load Clubs
+                      |  12. Save Clubs
                       |  0. Exit
                       |  > """.trimMargin("|")
         )
@@ -37,6 +44,7 @@ fun main() {
                 val name = readNextLine("Name: ")
                 val club = clubAPI.addClub(name)
                 println(" Club added: $club")
+                clubAPI.store()
             }
             2 -> {
                 // List all clubs
@@ -108,6 +116,7 @@ fun main() {
 
                 if (result) {
                     println("Club updated successfully.")
+                    clubAPI.store()
                 } else {
                     println("Club update failed. Check if index is valid.")
                 }
@@ -147,6 +156,7 @@ fun main() {
                     val deletedClub = clubAPI.deleteClub(indexToDelete)
                     if (deletedClub != null) {
                         println("Delete Successful! Deleted club: ${deletedClub.name}")
+                        clubAPI.store()
                     } else {
                         println("Delete NOT Successful. Invalid index.")
                     }
@@ -172,12 +182,23 @@ fun main() {
                 }
             }
 
+            11 -> {
+                clubAPI.load()
+                println("Clubs loaded successfully.")
+            }
+
+            12 -> {
+                clubAPI.store()
+                println("Clubs stored successfully.")
+            }
+
 
             0 -> println(" Exiting...")
             else -> println(" Invalid option")
 
         }
     } while (choice != 0)
+    clubAPI.store()
 }
 
 
