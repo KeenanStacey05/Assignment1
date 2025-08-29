@@ -2,6 +2,7 @@ package controllers
 
 import models.Club
 import models.Player
+import utils.isValidListIndex
 
 class PlayerAPI(private val clubAPI:ClubAPI) {
     private val players = mutableListOf<Player>()
@@ -71,6 +72,13 @@ class PlayerAPI(private val clubAPI:ClubAPI) {
         return false
     }
 
+    fun deletePlayer(indexToDelete: Int): Player? {
+        return if (isValidListIndex(indexToDelete, players)) {
+            players.removeAt(indexToDelete)
+        } else {
+            null
+        }
+    }
 
 
 }

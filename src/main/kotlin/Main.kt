@@ -25,6 +25,8 @@ fun main() {
                       |  6. Adding Players to a Club
                       |  7. Updating a Club
                       |  8. Updating a Player
+                      |  9. Deleting a Club
+                      |  10. Deleting a Player
                       |  0. Exit
                       |  > """.trimMargin("|")
         )
@@ -132,8 +134,48 @@ fun main() {
                 }
             }
 
+            9 -> {
+                val clubs = clubAPI.getAllClubs()
+                if (clubs.isEmpty()) {
+                    println(" No clubs found.")
+                } else {
+                    println(" Clubs:")
+                    clubs.forEach { println(" - ${it.clubId}: ${it.name}") }
+
+                    val indexToDelete = readNextInt("Enter the index of the club to delete: ")
+
+                    val deletedClub = clubAPI.deleteClub(indexToDelete)
+                    if (deletedClub != null) {
+                        println("Delete Successful! Deleted club: ${deletedClub.name}")
+                    } else {
+                        println("Delete NOT Successful. Invalid index.")
+                    }
+                }
+            }
+
+            10 -> {
+                val players = playerAPI.getAllPlayers()
+                if (players.isEmpty()) {
+                    println(" No players found.")
+                } else {
+                    println(" Players:")
+                    players.forEach { println(" - ${it.id}: ${it.name}: ${it.age}: ${it.clubId}: ${it.position}") }
+
+                    val indexToDelete = readNextInt("Enter the index of the player to delete: ")
+
+                    val deletedPlayer = playerAPI.deletePlayer(indexToDelete)
+                    if (deletedPlayer != null) {
+                        println("Delete Successful! Deleted player: ${deletedPlayer.name}")
+                    } else {
+                        println("Delete NOT Successful. Invalid index.")
+                    }
+                }
+            }
+
+
             0 -> println(" Exiting...")
             else -> println(" Invalid option")
+
         }
     } while (choice != 0)
 }
