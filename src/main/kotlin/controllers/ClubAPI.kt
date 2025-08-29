@@ -1,6 +1,7 @@
 package controllers
 
 import models.Club
+import utils.isValidListIndex
 
 class ClubAPI {
     private val clubs = mutableListOf<Club>()
@@ -35,5 +36,12 @@ class ClubAPI {
         return false
     }
 
+    fun deleteClub(indexToDelete: Int): Club? {
+        return if (isValidListIndex(indexToDelete, clubs)) {
+            clubs.removeAt(indexToDelete)
+        } else {
+            null
+        }
+    }
 }
 
