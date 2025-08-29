@@ -1,6 +1,7 @@
 import controllers.ClubAPI
 import controllers.PlayerAPI
 import models.Club
+import models.Player
 import utils.readNextInt
 import utils.readNextLine
 
@@ -23,6 +24,7 @@ fun main() {
                       |  5. Listing Players by their Club
                       |  6. Adding Players to a Club
                       |  7. Updating a Club
+                      |  8. Updating a Player
                       |  0. Exit
                       |  > """.trimMargin("|")
         )
@@ -108,6 +110,26 @@ fun main() {
                     println("Club update failed. Check if index is valid.")
                 }
 
+            }
+
+            8 -> {
+                val indexToUpdate = readNextInt("Enter index of Player to update: ")
+
+                val newId = readNextInt("Enter new Player ID: ")
+                val newName = readNextLine("Enter new Player Name: ")
+                val newAge = readNextInt("Enter new Player Age: ")
+                val newClubId = readNextInt("Enter new Club ID: ")
+                val newPosition = readNextLine("Enter new Player Position: ")
+
+                val updatedPlayer = Player(newId, newName, newAge, newClubId, newPosition)
+
+                val result = playerAPI.updatePlayer(indexToUpdate, updatedPlayer)
+
+                if (result) {
+                    println("Player updated successfully.")
+                } else {
+                    println("Player update failed. Check if index is valid.")
+                }
             }
 
             0 -> println(" Exiting...")
